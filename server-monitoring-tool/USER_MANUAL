@@ -1,0 +1,54 @@
+SERVER MONITORING TOOL - USER MANUAL
+----------------------------------------------------------------------------------------------------------------------------------------------
+This file will guide the user how to complile the code, generate logs and make queries based on IP Address, CPU ID and different date and time
+ranges.
+
+Programming Language : Python 2.7.6
+Platform : Ubuntu 14.04
+
+Libraries used : os, time, datetime, re, sys, random 
+Libraries installed using pip : ipaddress
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+Steps to be followed:
+
+1. Save all the files - generate.sh, query.sh and Makefile in any same directory.
+
+2. Run 'make' command to run the Makefile on the terminal. This will give all the script files enough executable permissions to be run on any 
+   Linux machine. Also, it will install python pip to install the 'ipaddress' module.
+
+3. The make command will also create a 'logs' directory inside the same directory as the scripts to save the log files. Or create your own 
+   directory and enter the correct data path for the next step.
+
+4. Run the script generator.sh to create log entries for 1000 servers each having 2 CPUs for every minute of one day starting from time 00:00.
+
+	$ ./generator.sh DATA_PATH
+
+   Pass a directory path as the DATA_PATH where the log file can be saved. Run the below command to save the log file in the 'logs' directory.
+
+	$ ./generator.sh ./logs
+
+5. Run the script query.sh and pass the absolute file path for the log file. 
+
+	$ ./query FILE_PATH
+
+  For example, the generator script will create a log file named 2014-10-31.log in the logs directory or any other chosen path by the user.
+
+	$ ./query ./logs/2014-31-10.log
+
+6. The above step will prompt the user to enter some command where the user has two options -
+
+	> QUERY A.B.C.D CPU_ID START_DATE START_TIME END_DATE END_TIME
+	Where,
+	A.B.C.D is a valid IPv4 Address
+	START_DATE and END_DATE are in the YYYYY-DD-MM format
+	START-TIME and END_TIME are in the HH:MM format
+	
+	or
+
+	The script will continue to take user input until the user wants to exit.
+	> EXIT  
+	
+
+P.S. The entire tool has been configured to create a log for one specific day --> 2014-10-31 as mentioned in the example.

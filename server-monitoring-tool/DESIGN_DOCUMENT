@@ -1,0 +1,89 @@
+SERVER MONITORING TOOL - DESIGN DOCUMENT
+----------------------------------------------------------------------------------------------------------------------------------------------
+This file will explain the user the basic functionality of the scripts generate.sh and query.sh to make it easier for the user to understand
+the code.
+
+Total time taken to create tool (approximately):
+  Programming and building logic - 9 hours
+  Testing and error handling - 4 hours
+  Documentation - 4 hours
+  Total - 17 hours
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+generate.sh
+
+1. This script take a DATA_PATH as a command-line argument where the user can pass the directory path to save the log file.
+
+2. As mentioned in the example, a UNIX timestamp is created for the date '2014-10-31' using the datetime Python module. 
+
+3. A file is created in the directory the user passed in DATA_PATH argument.
+
+4. A range of IP addresses is selected to have sufficient available IP Addresses for 1000 servers. The network 192.168.0.0 with a subnet mask 
+   of /28 or 255.255.252.0 is selected. Thus, 1022 IP addresses are available for assigning to the servers.  
+
+5. Now, the 'log_generator()' function is called to create a single log file with entries for 1000 servers each with two CPUs, for every minute 
+   of one day.
+
+6. Random CPU usage percentages are generated using the 'randint' funtion and data is written into the log file in the below format:
+
+	timestamp IP cpu_id usage
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+query.sh
+
+1. After running the script with the proper file path, the tool prompts the user to enter a command. The tool exits in case of an 'EXIT' or 
+   'exit' command.
+
+2. In case of 'QUERY' command, the scripts first validates all the parameters passed using the 'error_handling()' function.
+
+3. In an event of no errors, the tool then calculates the time difference between the time the log was started creating and the time the user
+   has requested for a log. This value in hours is stored in the 'server_diff' and in minutes in 'server_minutes' variables.
+
+4. Next, the timestamp is created for the date '2014-10-31' and the server_minutes are added to it to find the log entry for the time
+   requested by the user.
+
+5. The time difference between the start and end times as requested are calculated to present the user with the log entries for those time 
+   values only.
+
+6. An 'increment' variable is defined to increment the start time by one minute until the value of end time to view the log entries for the
+   desired range.
+
+7. The file is opened, and every line in the file is parsed using regular expressions Python module 're' for the timestamp, IP Address and 
+   CPU ID.
+
+8. The CPU usage is obtained from the log entries and the whole information is displayed to user in the below format:
+ 	
+	(start_date start_time, cpu_usage)
+
+9. The timestamp and the start time are updated to get the next log entry in the time range until all entries are displayed to the user.
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+FLOWCHART:						
+
+	
+					      START
+						|
+						|
+						V
+					     Makefile
+						|
+						|    Gives Executing permission, installs Python Library and created a directory for log files
+						|
+						V
+					    generate.sh	
+						|
+			------------------------|    Creates a log file with the name 2014-31-10.log in the ./logs directory (or as per user)
+			|			|		
+			|			V
+			|		----->query.sh
+			|   until user 	|	|
+			|   exits or an	|	|--------> Displays log entries to user, prompts for input 
+	Invalid data	|   incorrect	-------	|
+	path		|   user input		|
+			|		   exit	|
+			|			|
+			----------------------->|		
+						V
+					       END
