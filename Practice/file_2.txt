@@ -1,0 +1,14 @@
+1. how you can delete a file starting with a dash as well 
+Two ways - Either use backward slash before the filename or can use inode number to delete using the find . -inum [inode-number] exec rm -i {} \
+
+2. basic networking - how does a switch work
+
+3. Python - DICTIONARY
+4. malloc() working
+5. Memory allocation kernel
+6. rsync, ZFS?
+
+- Software Engineering round
+- Come up with best possible solution (Not brute)
+- Possible Hackerrank
+
