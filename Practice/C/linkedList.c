@@ -9,6 +9,8 @@ typedef struct node {
 } node_t;
 
 void print_list(node_t * head);
+int remove_by_value(node_t ** head, int val);
+int remove_item(node_t * head, int n);
 
 void push_last(node_t * head, int val){
 
@@ -42,6 +44,39 @@ void push_first(node_t ** head, int val) {
 
 	// print_list(*head);
 
+}
+
+int remove_by_value(node_t ** head, int value) {
+
+	int retval = -1;
+
+	int position = 0;
+
+	node_t * current;
+
+	current = malloc(sizeof(node_t));
+
+	current = *head;
+
+	while(current != NULL) {
+
+		// printf("Position: %d \t Value: %d\n", position, current->val);
+
+		if(current->val == value) {
+
+			printf("%d is found on the %d position\n", current->val, position);
+
+			remove_item(*head, position);
+
+			return 1;
+		}
+
+		position++;
+
+                current = current->next;
+        }
+
+	return retval;
 }
 
 int remove_first_item(node_t * head) {
@@ -85,16 +120,26 @@ int remove_last_item(node_t * head) {
 
 int remove_item(node_t * head, int n) {
 
-	node_t * current = head;
+	printf("\nHave to remove item at %d position ...\n", n);
+
+	node_t * current;
+
+	current = malloc(sizeof(node_t));
+
+        current = head;
 
 	node_t * temp = NULL;
 
 	if (n == 0) {
 
 		remove_first_item(head);
+
+		return 1;
 	}
 
 	for (int i = 0; i < n - 1; i++) {
+
+		// printf("Position: %d \t Value: %d\n", i, current->val);
 
 		if(current->next == NULL) {
 
@@ -113,13 +158,14 @@ int remove_item(node_t * head, int n) {
 
 }
 
+
 void print_list(node_t * head) {
 
 	node_t * current = head;
 
 	while(current != NULL) {
 
-                printf("%d \t %p\n", current->val, current->next);
+                printf("\n%d \t %p\n", current->val, current->next);
                 current = current->next;
         }
 
@@ -153,7 +199,9 @@ int main(){
 
 	print_list(head);
 
-        printf("Added 4 items\n\n");
+        // printf("Added 4 items\n\n");
+
+	/*
 
 	remove_first_item(head);
 
@@ -178,6 +226,18 @@ int main(){
         print_list(head);
 
         printf("Removed 1st item\n\n");
+
+	*/
+
+	// remove_item(head, 0);
+
+	if (remove_by_value(&head, 36) == -1) {
+
+		printf("\nValue not found in list!\n");
+
+	}
+
+	print_list(head);
 
 	return 0;
 
