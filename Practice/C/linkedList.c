@@ -32,6 +32,8 @@ void push_last(node_t * head, int val){
 
 void push_first(node_t ** head, int val) {
 
+	// printf("Pointer to head: %p\nDouble pointer to head: %p\n", *head, head);
+
 	node_t * new_node;
 
 	new_node = malloc(sizeof(node_t));
@@ -41,6 +43,8 @@ void push_first(node_t ** head, int val) {
 	new_node->next = *head;
 
 	*head = new_node;
+
+	// printf("Pointer to new head: %p\n", new_node);
 
 	// print_list(*head);
 
@@ -79,16 +83,20 @@ int remove_by_value(node_t ** head, int value) {
 	return retval;
 }
 
-int remove_first_item(node_t * head) {
+void remove_first_item(node_t * head) {
 
 	node_t * temp;
 
 	temp = malloc(sizeof(node_t));
 
+	/*
+
 	if (&head == NULL) {
 
 		return -1;
 	}
+
+	*/
 
 	temp->val = head->next->val;
 
@@ -100,7 +108,7 @@ int remove_first_item(node_t * head) {
 
 	head->val = temp->val;
 
-	return 1;
+	// return 1;
 }
 
 int remove_last_item(node_t * head) {
@@ -182,7 +190,6 @@ int main(){
 		return 1;
 	}
 
-
 	head->val = 1;
 
 	head->next = malloc(sizeof(node_t));
@@ -195,17 +202,17 @@ int main(){
 
 	push_last(head, 8);
 
-	push_first(&head, 24);
+	push_first(&head, 36);
 
 	print_list(head);
 
         // printf("Added 4 items\n\n");
 
-	/*
-
 	remove_first_item(head);
 
 	print_list(head);
+
+	/*
 
         printf("Removed first item\n\n");
 
@@ -227,9 +234,7 @@ int main(){
 
         printf("Removed 1st item\n\n");
 
-	*/
-
-	// remove_item(head, 0);
+	remove_item(head, 0);
 
 	if (remove_by_value(&head, 36) == -1) {
 
@@ -238,6 +243,8 @@ int main(){
 	}
 
 	print_list(head);
+
+	*/
 
 	return 0;
 

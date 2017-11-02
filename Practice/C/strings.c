@@ -7,7 +7,7 @@ int main(){
 	char name[20] = "BYE";
 	int age = 24;
 
-	printf("%s is %d years old.\n", name, age);
+	printf("%s is %d years old and address is %i.\n", name2, age, *name2);
 
 	printf("Length of string is %ld\n",strlen(name2));
 
