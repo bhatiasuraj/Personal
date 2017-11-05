@@ -70,6 +70,28 @@ void InsertAtTail (int data) {
 
 }
 
+void reverseList() {
+
+	node_t * temp = NULL;
+
+	node_t * current = head;
+
+	while(current != NULL) {
+
+		temp = current->prev;
+
+		current->prev = current->next;
+
+		current->next = temp;
+
+		current = current->prev;
+
+	}
+
+	if(temp != NULL) { head = temp->prev; }
+
+}
+
 void printList() {
 
 	node_t * temp = head;
@@ -112,13 +134,15 @@ void printReverseList() {
 
 int main() {
 
-	InsertAtHead(4); printList();
+	InsertAtHead(4); // printList();
 
-	InsertAtHead(2); printList();
+	InsertAtHead(2); // printList();
 
-	InsertAtTail(24); printList();
+	InsertAtTail(24); // printList();
 
 	InsertAtHead(55); printList();
+
+	reverseList(); printList();
 
 	return 0;
 

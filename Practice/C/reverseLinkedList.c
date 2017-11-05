@@ -12,6 +12,7 @@ typedef struct node_t {
 } node_t;
 
 void printList();
+void InsertAtHead(int data);
 
 node_t * head;
 
@@ -88,11 +89,38 @@ void InsertAtTail(int data) {
 
 }
 
-void reverseList(node_t **head) {
+void InsertAtPosition(int data, int pos) {
+
+	node_t * newNode = CreateNewNode(data);
+
+	node_t * current = head;
+
+	node_t * temp;
+
+	int position = 0;
+
+	if(pos == 0) { InsertAtHead(data) ; }
+
+	while(position != pos-1) {
+
+		current = current->next;
+
+		position++;
+	}
+
+	temp = current->next;
+
+	current->next = newNode;
+
+	newNode->next = temp;
+
+}
+
+void reverseList() {
 
 	node_t * prev = NULL;
 
-	node_t * current = *head;
+	node_t * current = head;
 
 	node_t * next;
 
@@ -110,7 +138,7 @@ void reverseList(node_t **head) {
 		current = next;
 	}
 
-	*head = prev;
+	head = prev;
 
 }
 
@@ -188,6 +216,18 @@ void deleteNodeByPosition(int pos) {
 
 
 	printf("No element at position %d\n", pos);
+
+}
+
+void removeHead() {
+
+	node_t * temp;
+
+	temp = head->next;
+
+	free(head);
+
+	head = temp;
 
 }
 
@@ -281,7 +321,7 @@ void getNodeHead(int pos) {
 
 void getNodeTail(int pos) {
 
-	reverseList(&head);
+	reverseList(head);
 
 	node_t * current = head;
 
@@ -289,7 +329,7 @@ void getNodeTail(int pos) {
 
 	while(current != NULL) {
 
-		if(pos = position) {
+		if(pos == position) {
 
 			printf("Value at position %d from tail: %d\n", pos, current->val);
 
@@ -334,13 +374,21 @@ int main() {
 
 	InsertAtHead(4);
 
-	reverseList(&head);
+	printList();
+
+	reverseList();
+
+	printList();
 
 	deleteNodeByValue(4);
 
 	InsertAtHead(2);
 
 	InsertAtHead(5);
+
+	removeHead();
+
+	InsertAtPosition(2, 3);
 
 	deleteNodeByPosition(0);
 
@@ -359,6 +407,12 @@ int main() {
 	bubbleSort();
 
 	printf("Sorted list: ");
+
+	printList();
+
+	reverseList();
+
+	printf("Reversed list: ");
 
 	printList();
 
