@@ -66,7 +66,7 @@ void InsertAtTail (int data) {
 
 	temp->next = new_node;
 
-	new_node->next = NULL;
+	new_node->prev = temp;
 
 }
 
